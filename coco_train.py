@@ -530,12 +530,11 @@ def evaluate(model, data_loader, cfg, device, logger=None, **kwargs):
 def get_args(**kwargs):
     cfg = kwargs
     parser = argparse.ArgumentParser(description='Train the Model on images and target masks',formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--json_file',type=str,default='via_export_coco.json',help='COCO JSON file')
+    parser.add_argument('--parent_folder_path',type=str,default='parent_dir',help='Parent Folder Path')
     parser.add_argument('--learning_rate', metavar='LR', type=float,default=0.001,help='Learning rate')
     parser.add_argument('--load',  type=str, default=None, help='Load model from a .pth file')
     parser.add_argument('--gpu', metavar='G', type=str, default='0',help='GPU')
-    parser.add_argument('--train_dir',type=str,default='train',help='Image dir')
-    parser.add_argument('--pretrained', type=str, default='yolov4.conv.137.pth', help='pretrained yolov4.conv.137')
+    parser.add_argument('--pretrained', type=str, default='weights/yolov4.conv.137.pth', help='pretrained yolov4.conv.137')
     parser.add_argument('-optimizer', type=str, default='adam',help='training optimizer',dest='TRAIN_OPTIMIZER')
     parser.add_argument('-iou-type', type=str, default='iou',help='iou type (iou, giou, diou, ciou)',dest='iou_type')
     parser.add_argument('-keep-checkpoint-max', type=int, default=5,help='maximum number of checkpoints to keep. If set 0, all checkpoints will be kept',dest='keep_checkpoint_max')
@@ -591,7 +590,7 @@ if __name__ == "__main__":
 
     logging = init_logger(log_dir='log')
     cfg = get_args(**Cfg)
-    cfg.dataset_dir = pre_process(cfg.json_file, cfg.train_dir)
+    cfg.dataset_dir = pre_process(cfg.parent_folder_path)
     
     os.environ["CUDA_VISIBLE_DEVICES"] = cfg.gpu
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
