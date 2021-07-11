@@ -91,7 +91,7 @@ def create_unique_id(df,image_folder,index_no='400',out_folder="train_set"):
         os.rename(src, dst)
 
     df["image"] = df["image"].map(data_dict)
-    print(output_path)
+    
     return df,output_path
 
 
@@ -125,12 +125,13 @@ def convert_Input_CSV_to_yolo(vott_df,labeldict=dict(zip(['Object'],[0,])),path=
 
 
 
-def pre_process(json_file_path,image_folder_path,val_split=0.8):
+def pre_process(folder_path,folder_name='train',class_names='data/class.names',
+                json_file='via_export_coco.json',train_file ='data/train.txt',val_file = 'data/val.txt',val_split=0.9):
 
-    DATA_CLASSES='data/class.names'
-    train_file = 'data/train.txt'
-    val_file = 'data/val.txt'
 
+    image_folder_path=os.path.join(folder_path,folder_name)
+    json_file_path = os.path.join(image_folder_path,json_file )
+    
     df = coco_data_convert(json_file_path, image_folder_path)
     multi_df, out_data_dir = create_unique_id(df, image_folder_path)
 
@@ -139,7 +140,7 @@ def pre_process(json_file_path,image_folder_path,val_split=0.8):
     multi_df.drop_duplicates(subset=None, keep='first', inplace=True)
     
     convert_Input_CSV_to_yolo(multi_df,labeldict,path = out_data_dir,target_name=train_file)
-    file = open(DATA_CLASSES,"w") 
+    file = open(class_names,"w") 
     SortedLabelDict = sorted(labeldict.items() ,  key=lambda x: x[1])
     for elem in SortedLabelDict:
         file.write(elem[0]+'\n') 
@@ -152,4 +153,8 @@ def pre_process(json_file_path,image_folder_path,val_split=0.8):
 
 
     return out_data_dir
-    
+
+
+#data_prepare(folder_path)
+#data_prepare(folder_path, 'test_set','data/test.names','test','via_export_coco.json','data/val.txt')    
+
