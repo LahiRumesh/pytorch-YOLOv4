@@ -125,7 +125,7 @@ def convert_Input_CSV_to_yolo(vott_df,labeldict=dict(zip(['Object'],[0,])),path=
 
 
 
-def pre_process(json_file_path,image_folder_path,val_split=0.9):
+def pre_process(json_file_path,image_folder_path,val_split=0.8):
 
     DATA_CLASSES='data/class.names'
     train_file = 'data/train.txt'
@@ -133,7 +133,6 @@ def pre_process(json_file_path,image_folder_path,val_split=0.9):
 
     df = coco_data_convert(json_file_path, image_folder_path)
     multi_df, out_data_dir = create_unique_id(df, image_folder_path)
-    #multi_df = pd.read_csv('utils/fedex/out.csv')
 
     labels = multi_df['label'].unique()
     labeldict = dict(zip(labels,range(len(labels))))
