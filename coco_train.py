@@ -45,11 +45,11 @@ from utils.data_process import pre_process
 def get_args(**kwargs):
     cfg = kwargs
     parser = argparse.ArgumentParser(description='Train the Model on images and target masks',formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--parent_folder_path',type=str,default='/home/lahiru/Computer_Vision/Object_Detecion/YOLOv4/v2_pytorch/update_2/pytorch-YOLOv4/utils/fedex',help='Parent Folder Path')
+    parser.add_argument('--parent_folder_path',type=str,default='train_dir',help='Parent Folder Path')
     parser.add_argument('--learning_rate', metavar='LR', type=float,default=0.001,help='Learning rate')
     parser.add_argument('--load',  type=str, default=None, help='Load model from a .pth file')
     parser.add_argument('--gpu', metavar='G', type=str, default='0',help='GPU')
-    parser.add_argument('--pretrained', type=str, default='/home/lahiru/Computer_Vision/Object_Detecion/YOLOv4/v2_pytorch/update_2/pytorch-YOLOv4/pth_weights/yolov4.conv.137.pth', help='pretrained yolov4.conv.137')
+    parser.add_argument('--pretrained', type=str, default='pth_weights/yolov4.conv.137.pth', help='pretrained yolov4.conv.137')
     parser.add_argument('-optimizer', type=str, default='adam',help='training optimizer',dest='TRAIN_OPTIMIZER')
     parser.add_argument('-iou-type', type=str, default='iou',help='iou type (iou, giou, diou, ciou)',dest='iou_type')
     parser.add_argument('-keep-checkpoint-max', type=int, default=5,help='maximum number of checkpoints to keep. If set 0, all checkpoints will be kept',dest='keep_checkpoint_max')
